@@ -26,7 +26,7 @@ spec:
         app: hello-node
     spec:
       containers:
-        - image: us-central1-docker.pkg.dev/lomitec/my-docker-repo/hello-node:v2
+        - image: us-central1-docker.pkg.dev/lomitec/my-docker-repo/hello-node:v1
           imagePullPolicy: IfNotPresent
           name: hello-node
           resources: {}
