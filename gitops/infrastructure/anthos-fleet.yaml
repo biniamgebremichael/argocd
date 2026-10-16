@@ -1,0 +1,11 @@
+apiVersion: ://google.com
+kind: GKEHubMembership
+metadata:
+  name: hello-staging-membership
+  namespace: config-control
+spec:
+  location: global
+  endpoint:
+    gkeCluster:
+      resourceRef:
+        name: hello-staging

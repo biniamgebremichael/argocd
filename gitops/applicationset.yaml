@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: hello-node-environments
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        # This list instructs Argo CD to generate an app matching each defined folder block
+        - environment: staging
+          cluster: https://kubernetes.default.svc # Adjust to staging API server if running multi-cluster
+        - environment: production
+          cluster: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: 'hello-node-{{environment}}-app'
+    spec:
+      project: default
+      source:
+        repoURL: 'https://github.com/biniamgebremichael/argocd.git'
+        targetRevision: HEAD
+        # This dynamically targets either gitops/apps/staging or gitops/apps/production
+        path: 'gitops/apps/{{environment}}'
+      destination:
+        server: '{{cluster}}'
+        namespace: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true

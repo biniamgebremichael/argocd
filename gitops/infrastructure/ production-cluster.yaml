@@ -1,0 +1,12 @@
+apiVersion: ://google.com
+kind: ContainerCluster
+metadata:
+  name: hello-production
+  namespace: config-control
+spec:
+  location: us-central1-a
+  initialNodeCount: 2
+  nodeConfig:
+    machineType: e2-medium
+    workloadMetadataConfig:
+      mode: GKE_METADATA

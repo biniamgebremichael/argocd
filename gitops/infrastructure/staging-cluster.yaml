@@ -1,0 +1,13 @@
+apiVersion: ://google.com
+kind: ContainerCluster
+metadata:
+  name: hello-staging
+  namespace: config-control
+spec:
+  location: us-central1-a
+  initialNodeCount: 1
+  nodeConfig:
+    machineType: e2-medium
+    # Required to securely map Kubernetes identities to GCP IAM roles
+    workloadMetadataConfig:
+      mode: GKE_METADATA
