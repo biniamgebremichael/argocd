@@ -8,9 +8,13 @@ spec:
     - list:
         # This list instructs Argo CD to generate an app matching each defined folder block
         - environment: staging
-          cluster: https://kubernetes.default.svc # Adjust to staging API server if running multi-cluster
+          clusterName: hello-staging
+          clusterServer: https://kubernetes.default.svc
+          targetNamespace: staging
         - environment: production
-          cluster: https://kubernetes.default.svc
+          clusterName: hello-production
+          clusterServer: https://kubernetes.default.svc
+          targetNamespace: production
   template:
     metadata:
       name: 'hello-node-{{environment}}-app'
@@ -19,12 +23,14 @@ spec:
       source:
         repoURL: 'https://github.com/biniamgebremichael/argocd.git'
         targetRevision: HEAD
-        # This dynamically targets either gitops/apps/staging or gitops/apps/production
         path: 'gitops/apps/{{environment}}'
       destination:
-        server: '{{cluster}}'
-        namespace: default
+        # Use server: '{{clusterServer}}' for in-cluster or name: '{{clusterName}}' for multi-cluster
+        server: '{{clusterServer}}'
+        namespace: '{{targetNamespace}}'
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
