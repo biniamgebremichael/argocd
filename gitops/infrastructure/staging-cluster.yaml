@@ -1,4 +1,4 @@
-apiVersion: ://google.com
+apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerCluster
 metadata:
   name: hello-staging
